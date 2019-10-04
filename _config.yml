@@ -15,8 +15,8 @@ sass:
 
 permalink: /posts/:title/
 texture:
-  title: Seraph Blog
-  tagline: Liu Shupeng
+  title: LiuShupeng Blog
+  tagline: developer. desginer
   date_format: "%b %-d, %Y"
   style: black
   showNav: false
