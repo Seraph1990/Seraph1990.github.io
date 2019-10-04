@@ -9,7 +9,7 @@
 ##### 操作：
 ###### 远程机准备工作：
 1. 将远程调试资料拷贝至远程机，并打开x86（Win32程序）下的msvsmon.exe程序，出现如下图所示：
-![远程调试监视器](vs.jpeg)
+![远程调试监视器](_post/images/vs.jpeg)
 
 2. 点击菜单“工具”-“选项”，然后选择“无身份验证”，勾选“允许任何用户进行调试”
 ![身份验证选择](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtYmFjZThmOWU4ZWM0YjU5ZS5wbmc?x-oss-process=image/format,png)
