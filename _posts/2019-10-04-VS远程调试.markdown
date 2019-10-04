@@ -1,6 +1,6 @@
 
 文|Seraph
-#### 一、VS2010
+本文主要介绍Visual studio的远程调试功能使用步骤（以VS2010进行介绍）
 
 ##### 前置条件：
 1. 首先从VS安装路径（C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Remote Debugger）获取远程调试程序；
