@@ -16,7 +16,7 @@ sass:
 permalink: /posts/:title/
 texture:
   title: Seraph Blog
-  tagline: Liu. Designer
+  tagline: Liu Shupeng
   date_format: "%b %-d, %Y"
   style: black
   showNav: false
@@ -26,7 +26,7 @@ texture:
   social_links:
     twitter: seraph1990
     github:  seraph1990
-    linkedIn: in/liushupeng
+    linkedIn: in/树鹏-刘-06b291137
     rss: rss
  
 
