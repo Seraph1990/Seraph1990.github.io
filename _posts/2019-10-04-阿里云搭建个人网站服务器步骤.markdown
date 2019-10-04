@@ -1,0 +1,115 @@
+文|Seraph
+
+# 01 |  购买云服务器 ECS
+所谓的云服务器即是阿里云帮你实际搭建服务器，并给你提供远程控制服务。一般会预装定制的操作系统。
+1. 我这里购买的是 [入门级服务器最便宜293元一年](https://promotion.aliyun.com/ntms/act/qwbk.html?userCode=i2jkooiv)。如果链接失效，直接去阿里云官网购买适合的云服务器即可。
+2. 我的云服务器安装的操作系统是`CentOS 7.4`。
+3. 打开`控制台-云服务器ECS`，在`我的资源`中能看见刚购买的云服务器实例。
+![云服务器](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LThmMDUzNmVjYzBmZDRlNzIucG5n?x-oss-process=image/format,png)
+4. 点击云服务器 **1** 标志，可以进入具体的云服务器实例列表。这里我们包含如下``实例ID``、``IP地址``等信息。
+![实例列表](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWViZDI3Nzk3NjU4YjBlZDQucG5n?x-oss-process=image/format,png)
+5. 我们可以点击上图右端中`远程连接`，来连接并控制云服务器。你可以尝试远程控制看下效果。但是开发过程中会推荐`XShell`等远程连接工具进行控制，后续搭建服务器环境会讲到。
+
+# 02 | 购买域名
+1. 打开[万网](https://wanwang.aliyun.com/)，搜索想要的域名关键字，查看相关域名当前情况，并根据具体喜好和价钱进行购买。
+![域名搜索](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTczOWMyZDU2NGRlNTVmMjgucG5n?x-oss-process=image/format,png)
+
+# 03 | 域名解析
+1、打开`控制台-域名`，可以看见我们刚才购买的域名。
+![域名列表](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWU3MTMxMmFjZDZhN2E3YWQucG5n?x-oss-process=image/format,png)
+2、点击上图中右方`解析`进行添加域名解析记录。点击如下新手引导。
+![解析设置](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTU1MzQyMzVmMTIzZDJkMzIucG5n?x-oss-process=image/format,png)
+
+3、在`记录值`中输入我们的云服务器实例的 ``公网IP地址``，即能创建出如上图的解析记录。
+![新手引导](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWI3YWEwZDIxN2E2ODVhMmEucG5n?x-oss-process=image/format,png)
+
+# 04 | 添加安全规则
+1. 打开实例的`本实例安全组`，添加如下`TCP 80`端口的入方向安全规则配置。
+![TCP 80 安全规则](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTU4YzNiNTJhNjRkOGI4MTcucG5n?x-oss-process=image/format,png)
+
+# 05 | 安装XShell和XFtp
+1. 下载免费版[XShell 和 XFtp](https://www.netsarang.com/zh/free-for-home-school/)，填入`姓名`和`邮件`，下载链接会发送到你填入的邮箱中。
+![XShell 和 XFTP](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTg5OGI3YTdmYzkzYmZmNGEucG5n?x-oss-process=image/format,png)
+2. 安装`XShell`和`XFTP`完成后，打开``XShell``，新建会话。  
+在`主机`项输入`云服务器公网IP`，点击确认即可。  
+![会话](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWEwY2E2OTc2M2NlYzQyODIucG5n?x-oss-process=image/format,png)
+3. 输入用户名，云服务器默认为：``root``。  
+![image.png](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWY3ZWQ2MWFlYjk3MTcxMDIucG5n?x-oss-process=image/format,png)
+4. 双击新建的会话，输入密码（购买云服务器时，预设的密码）即可控制台登录云服务器。
+5. 点击`窗口-传输新建文件`即能打开`Xftp`直接连接到云服务器，以便后续往服务器上传安装包。
+![Xftp](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWNlNzM3YTUxOWVmYWY3MjQucG5n?x-oss-process=image/format,png)
+
+# 06 | 安装Java JDK
+1. 下载[Java JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)，下载`jdk-版本编号-linux-x64.tar.gz`。
+我这里实际下载的是`jdk-8u201-linux-x64.tar.gz`。
+2. 下载[Tomcat](http://tomcat.apache.org/download-80.cgi)，这里下载的是`Tomcat 8`的`tar.gz`包。
+我这里实际下载的是`apache-tomcat-8.5.37.tar.gz`。
+3. 使用`Xftp`将`Java JDK`和`Tomcat`安装包分别放置云服务器`/usr/java`目录下的`jdk`和`tomcat`目录下。
+![Java目录](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWY0ZWY1ZDUyOTFlNmU0ODMucG5n?x-oss-process=image/format,png)
+4. 使用`XShell`进入`/usr/java/jdk`目录，输入以下命令：
+`tar -xvf jdk-8u201-linux-x64.tar.gz -C /usr/java/jdk/`
+5. 使用`vim`配置 ``/etc/profile``文件系统环境变量如下。(文件末尾添加即可）
+```
+export JAVA_HOME=/usr/java/jdk/jdk1.8.0_201
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
+export PATH=${JAVA_HOME}/bin:$PATH
+
+```
+6. 然后输入`source /etc/profile`。
+7. 输入`java -version`可验证是否配置成功。   
+![java -version](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTM4YWM5NzMxYzhkZTBmYzQucG5n?x-oss-process=image/format,png)
+
+# 07 | 安装Tomcat
+1. 使用`XShell`进入`/usr/java/tomcat`目录。
+2. 输入以下命令（以下tomcat版本号为8.5.37）。
+`tar -xvf apache-tomcat-8.5.37.tar.gz -C /usr/java/tomcat/`
+3. 使用`XShell`，进入`/usr/java/tomcat/apache-tomcat-8.5.37/conf`目录。
+4. 编辑``server.xml``文件，找到如下语句块，将端口号`8080`修改为`80`。   
+![80端口](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWQzMDM2OTYzNWQxMDFmYmUucG5n?x-oss-process=image/format,png)
+5. 进入`/usr/java/tomcat/apache-tomcat-8.5.37/bin`目录，并输入`./startup.sh`启动`Tomcat`。(停止可以使用`./shutdown.sh`)   
+![启动Tomcat](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTg2ZTJmYjI2Zjk5NjIzZTEucG5n?x-oss-process=image/format,png)
+6. 稍等会，使用浏览器访问你的域名即可看见`Tomcat`服务器默认界面。   
+![Tomcat界面](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTU2MDFkYjRjYmRhMDc2MjYucG5n?x-oss-process=image/format,png)
+7. 如出现如下界面，按提示可知，我们还需要对我们的网站进行[备案](https://beian.aliyun.com/)。   
+![备案提示](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTZhNzZjYmYyZWQ3YmMwMGYucG5n?x-oss-process=image/format,png)
+8. 按备案流程填写相关信息，一步一步按流程走即可，期间阿里云会发送你一个拍照背景包裹。使用该背景布拍摄照片即可。
+9. 在备案期间，我们可以使用公网IP访问我们的云服务网站。
+
+# 8 | 部署网站测试
+1. 本地机器安装Java环境和IDEA。（见 [IDEA Ultimate版本安装](https://www.jianshu.com/p/00190c16764c))
+2. 新建`Web Application`   
+![新建工程](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTQzNTEyNTkzOWYyYzQwMTAucG5n?x-oss-process=image/format,png)
+3. 找到`web`目录下的`index.jsp`文件。将文件内容修改如下：   
+![index.jsp](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTdhMmM5OTE0NDYyOGEwMGUucG5n?x-oss-process=image/format,png)
+4. 点击右上角 `Project Structure` 按钮。   
+![Project Structure](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTZlYTdkMzEwNWQ0MjFmMTcucG5n?x-oss-process=image/format,png)
+5. 选择`Artifacts`，点击`+`，再选择`Web Application:Archive-From 'helloworld exploded'`   
+![helloworld:war](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTMxOThiMTg1NGMwMDU4YWQucG5n?x-oss-process=image/format,png)
+6. 点击`+`，选择`Directory Content`   
+![Directory Content](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTNkZWU4ZWVjZTcyMzM2OTgucG5n?x-oss-process=image/format,png)
+7. 打开的对话框，选择默认路径就行（即当前的工程目录）。   
+![helloworld](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTNiMGIxZGE4Nzk5N2NjYmUucG5n?x-oss-process=image/format,png)
+8. 打开`Build-Build Artifacts`菜单即可    
+![Build Artifacts](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTU4YmExMzBkMzNkYTI2NWEucG5n?x-oss-process=image/format,png)
+9. 选择`helloworld:war-build`，进行war包的构建。   
+![hellworld:war](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWRiM2NiMzFkZmRlZTAzNzYucG5n?x-oss-process=image/format,png)
+10. 使用`XFtp`将工程目录`helloworld\out\artifacts\helloworld_war`下的`helloworld_war.war`文件传到云服务器`/usr/java/tomcat/apache-tomcat-8.5.37/webapps`目录下。
+11. 使用`XShell`，编辑`/usr/java/tomcat/apache-tomcat-8.5.37/conf`目录下的`server.xml`文件。添加如下红框内代码：   
+![server.xml](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTRkM2U4NmUxNmFlM2EyODUucG5n?x-oss-process=image/format,png)
+12. 重启Tomcat服务器后，使用浏览器访问域名或服务器IP网址，即可以浏览我们刚新建的网页信息。   
+![网页信息](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTY3MjdlZGJkY2E2YjgzOTQucG5n?x-oss-process=image/format,png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
