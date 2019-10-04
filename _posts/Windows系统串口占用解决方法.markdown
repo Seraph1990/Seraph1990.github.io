@@ -1,0 +1,28 @@
+文|Seraph
+>本文主要介绍消除串口被占用（使用中）的问题。
+
+有时候，我们的应用需要用到串口传输数据，但是串口是独占模式的，所以经常会遇到冲突的情况。
+使用的串口经常被莫名进程占用。
+此时，我们需要去清除串口被占用的情况，才能使我们当前编写的应用程序使用想要的串口。
+
+
+##### 1. 检查串口被占用情况
+* 打开``设备管理器``，点开``端口（COM和LPT）``
+* 找到``COM1``（假设为当前程序需要使用的串口号），然后右键选择``属性``，打开``端口设置``选项卡如下图所示：   
+![COM1属性](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtZDExYTJmNzkwNTMyMTg2ZS5wbmc?x-oss-process=image/format,png)
+* 单击``高级``按钮，打开``COM端口号``下拉选项，可以看到当前被占用的串口（注意：不能看到当前自己的占用情况）：   
+![串口1的高级设置](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtNTNiYzVmMDQzYjBhMzM3NS5wbmc?x-oss-process=image/format,png)
+
+检测到有串口被占用，则需要通过以下操作来消除（当然，未检测到，也可尝试，因为有时候设备管理器显示也不一定准确）
+##### 2. 清除注册表
+* 运行中输入``regedit``，打开注册表
+* 找到如下路径：
+``HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Control/COM Name Arbiter``
+* 找到``ComDB``项，删除后，重启电脑即可。   
+##### 3. 卸载通信端口
+如果清除注册表，重启后，串口依然无法使用，则进行如下操作：
+* 在``设备管理器``中，右键``通信端口（COM1）``，如下图所示：   
+![卸载通信端口](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtNzJmZGUyYTkwZWIxYWI0Zi5wbmc?x-oss-process=image/format,png)
+* 点击``卸载``，重启电脑即可。
+
+
