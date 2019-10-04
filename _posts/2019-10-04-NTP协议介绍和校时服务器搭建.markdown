@@ -1,0 +1,85 @@
+文|Seraph
+>本文主要简单介绍用于校时的NTP/SNTP协议
+>同时，以windows 2008 R2为例，搭建NTP/SNTP服务器
+>NTP可参考文献RFC1305，SNTP可参考文献RFC1796
+
+##### 1. 应用场景
+一般应用，连上公网即可通过NTP/SNTP协议进行校时，例如Windows系统上自带的NTP/SNTP服务器地址：time.windows.com。
+然而，有些应用要求校时精度比较高，所以需要局域网内自行搭建NTP/SNTP校时服务。 
+
+##### 2. NTP与SNTP功能
+网络时间协议可以估算出数据包在网络上往返延迟，并可独立地计算出计算机时钟偏差。NTP可以提供1~50ms的可靠时钟源。
+在实际很多应用中，可能不需要如此高精度，此种情况可以使用SNTP。SNTP通常是用于网络中叶子节点设备的时间同步，因为通常该站点对时间精度的要求并不是非常高。
+NTP和SNTP的数据包格式是一样的，计算客户时间、时间偏差以及包往返时延的算法也是一样的。
+
+
+##### 3. NTP工作原理
+![时间序列图](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtMDkwYmE5MmQ5ZWM4OWE0Yi5wbmc?x-oss-process=image/format,png)    
+双向延时：![](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtNTBhN2ZlZDlmZDdjZWMwNy5wbmc?x-oss-process=image/format,png) A相对于B的时间差：![](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtYjA4MjM4ZWJhNmZkNzlhOC5wbmc?x-oss-process=image/format,png)
+如果往返的传输时间相等，根据四个时刻可以求得时钟偏差和传输时间
+
+##### 4. NTP协议格式
+![NTP协议格式](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtNWUyZDE2ZjQ0MzI5Y2M4YS5wbmc?x-oss-process=image/format,png)
+
+##### 5. NTP工作模式
+* 服务\客户端模式   
+![服务\客户端模式](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtOGRhODY2OTM1YzA4N2YxZC5wbmc?x-oss-process=image/format,png)
+
+* 广播模式   
+![广播模式](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtZjEyZWZmNzg5NmRlNzNkMS5wbmc?x-oss-process=image/format,png)
+
+* 对等体模式   
+![对等体模式](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtYmU2YTY2NGIyYjU4ZDYxMy5wbmc?x-oss-process=image/format,png)
+
+* 组播模式   
+![组播模式](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtMTJlYmM4YWVmYjhiMWQ2YS5wbmc?x-oss-process=image/format,png)
+
+#### 6. Windows搭建NTP/SNTP服务器
+以下是使用WIndows Time（W32Time）service建立一个SNTP/NTP服务器，为windows或非windows客户端提供时间服务。
+
+######  手动修改步骤
+<1> 修改注册表
+* 打开``运行``，输入``regedit``,打开注册表
+* 找到如下位置：
+``HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Config``
+双击``AnnounceFlags``项，并输入数值``5``
+* 在注册表找到如下位置：
+``HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\TimeProviders\NtpServer``
+双击``Enabled``项，并输入``1``
+
+<2> 重启win32time服务
+* 打开CMD命令行
+* 输入``sc config W32Time start=auto`` 配置为**自动**启动
+* 输入``net stop w32time`` 关闭服务
+* 输入``net start w32time`` 启动服务
+显示``WIndows Time 服务已经启动成功``即表示服务器搭建成功！
+
+###### 使用.bat制作一键处理
+命令功能包含：修改注册表并启动W32Time服务，将该代码段Copy到.bat文件中，保持运行即可。
+```
+@echo off
+echo 正在初始化SNTP服务器......
+echo Windows Registry Editor Version 5.00 >t1.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Config] >>t1.reg 
+echo "AnnounceFlags"=dword:00000005 >>t1.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\NtpServer] >>t1.reg 
+echo "Enabled"=dword:1 >>t1.reg
+regedit /s t1.reg 
+del /q t1.reg 
+sc config W32Time start=auto
+sc stop W32Time
+sc start W32Time
+echo SNTP服务器启动完成！
+echo. & pause
+```
+
+<3> 客户端测试
+* 找到局域网内另一天计算机，打开cmd
+* 输入``net time /setsntp:130.0.0.1`` (这里的IP为刚刚搭建的校时服务器IP）
+* 输入``net stop w32time``
+* 再输入``net start w32time``
+现在客户端即可与服务器同步时间了，可以手动改动服务器时间来看客户端是否同步更新。
+
+
+#####6. 相关软件资源
+* [Meinberg NTP](https://www.meinbergglobal.com/english/sw/ntp.htm)
