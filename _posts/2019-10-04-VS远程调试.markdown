@@ -1,0 +1,45 @@
+
+文|Seraph
+#### 一、VS2010
+
+##### 前置条件：
+1. 首先从VS安装路径（C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Remote Debugger）获取远程调试程序；
+2. 保证调试及和远程被调试机联通。 
+
+##### 操作：
+###### 远程机准备工作：
+1. 将远程调试资料拷贝至远程机，并打开x86（Win32程序）下的msvsmon.exe程序，出现如下图所示：
+![远程调试监视器](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtZGFkZWNiMjg4NzE5MDAxYi5wbmc?x-oss-process=image/format,png)
+
+2. 点击菜单“工具”-“选项”，然后选择“无身份验证”，勾选“允许任何用户进行调试”
+![身份验证选择](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtYmFjZThmOWU4ZWM0YjU5ZS5wbmc?x-oss-process=image/format,png)
+
+3. 点击确认后，如下图即可：   
+![远程机成功提示](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtN2VmMDc4ZTkxN2U0NmNiMy5wbmc?x-oss-process=image/format,png)
+
+##### 调试机操作：
+首先，需要打开需要调试的工程项目，并生产调试文件和执行文件（exe，pdp），将其拷贝至远程机指定目录（自己确定就行）下。（***这步很重要！必须确定源码和生成文件保持一致，否则无法进行调试。***）
+###### 附加进程调试
+1. 首先保持远程机程序运行；
+2. 打开调试机VS工程界面，选择菜单“调试”-“附加到进程...”，弹出如下对话框:
+![附加进程对话框](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtY2ZhMzhjYzY1ZDdhYzg3Ny5wbmc?x-oss-process=image/format,png)
+
+3. 如上所示，选择“远程（无身份验证时仅限本机”传输，限定符输入远程机IP，然后点击刷新
+4. 最后在可用的进程中选择远程机运行的程序即可。
+
+###### 远程启动调试
+1. 首先不需要远程机程序，但需要将远程机程序目录共享给调试机。
+2. 直接打开VS10工程界面，打开调试工程属性页面，选择“配置属性”-“调试”，如下图：
+
+![调试启动设置](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtOTI2NjBlZTMyYzVkYTdlMS5wbmc?x-oss-process=image/format,png)
+3. 如上所示，远程调试命令输入共享的调试路径，工作目录输入共享程序目录，远程服务器名称输入远程机IP，连接选择不带身份证验证的远程访问即可。
+4. 点击应用，并确认，即可进行远程启动调试了。 
+
+
+
+
+
+
+>当你随意写下任何分享的文字后，你是否想过会有人认认真真地阅读每一个细节；
+>当你埋怨别人写的教程有误的时候，是否想过自己写的文章或许也是百孔千疮。
+>谨慎下笔，审视阅读！
