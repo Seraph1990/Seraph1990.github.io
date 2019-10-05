@@ -1,0 +1,70 @@
+文|Seraph
+
+### 00 | 前期准备
+1. 注册好GitHub账号，并在本机部署好Git环境。如不熟悉Git/GitHub的使用，可以看下这篇[《GitHub入门与实践》读书笔记](https://blog.csdn.net/pengshuyes/article/details/101849054)或原书。
+2. 阿里云购买域名。
+
+#### 01 | 搭建GitHubPage
+1. 创建库
+切记要输入与你账户名一致的库名，且一定要加`.github.io`后缀，这是为了访问以及域名解析方便。
+我这里的账户名为：MEseraph
+![创建库](https://img-blog.csdnimg.cn/20191004203135561.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+2. 打开terminal，使用git clone克隆刚刚创建好的库。
+![git clone](https://img-blog.csdnimg.cn/20191004205015246.png)
+3. 在本地库`MESeraph.github.io`目录下新建一个`index.html`，内容如下：(这是一个简单的html网页）
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        h1{
+            text-align: center;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello Github</h1>   
+</body>
+</html>
+```
+
+4. 使用 git add 及 git commit将index.html添加至本地库。
+![add index.html](https://img-blog.csdnimg.cn/20191004205248180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+5. 将修改更新至GitHub。
+首次连接GitHub，需要如下一样输出账户和密码。
+![git push](https://img-blog.csdnimg.cn/2019100420550771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+6. 打开GitHub中刚新建的MESeraph.github.io库，然后点击`setting`，下拉找到如下页面： ![GitHub Pages](https://img-blog.csdnimg.cn/20191004205933891.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+7. 打开上图的链接`https://meseraph.github.io`，即能打开我们刚新建的网页。即证明GitHub网页设置成功。
+![首页](https://img-blog.csdnimg.cn/20191004210254296.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+
+### 02 | 域名解析
+1. 在MEseraph.github.io下添加一个CNAME文件，文件内容填写已经购买的域名，如下：
+```
+www.liushupeng.cn
+```
+2. 打开阿里云中域名解析页面，修改域名解析记录如下：![域名解析](https://img-blog.csdnimg.cn/20191004212647785.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+3.  过一会就能使用该域名访问我们得GitHub Pages了。
+
+### 03 | 使用Jekyll定制博客模板
+1. 去[jekellthemes](http://jekyllthemes.org/)网站下载一套博客模板，我这里使用的是如下模板：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019100509505251.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+2. 将文件解压后，放置`MEseraph.github.io`目录下，并使用git命令提交至GitHub。
+![add texture](https://img-blog.csdnimg.cn/2019100510010722.png)
+这里git push前，需要先git pull一下，因为我之前是在GitHub网页上添加的CNAME，没有同步到本地库。
+![git push](https://img-blog.csdnimg.cn/2019100510044174.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+3.  然后删除之前加的index.html文件，以及修改_config.yml中的`baseurl: /texture` 为`baseurl: /`  。因为我们为了能直接输入域名即能打开网页，没有直接用模板的texture目录，这里修改基础目录，为了网页都能正常访问相对位置的资源。
+![config.yml](https://img-blog.csdnimg.cn/20191005102056893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+4. 添加博客文
+模板中博客文全部放置在_posts目录下：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191005102803804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+如上我们添加了一盘博客文，注意格式一定是`年-月-日-标题.markdown`，markdown的后缀不能少，同时右侧可以预览效果。
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191005103113192.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+5. 这些模板的其它参数修改，请自行按自己理解修改，大部分参数都在_config.yml文件中。如下是我最后修改的模样。![在这里插入图片描述](https://img-blog.csdnimg.cn/20191005103447745.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+### 04 | 其它
+1. 进一步了解[jekell](https://www.jekyll.com.cn/)知识。
+2. MEseraph账号是自己专门为了写这个博客文新建的github账户，实际常用的是seraph1990。
+[GitHub](https://github.com/Seraph1990)
+[liushupeng.top](https://liushupeng.top)
