@@ -1,0 +1,485 @@
+---
+layout: post
+title:  "《OpenCV3 计算机视觉》读书笔记"
+description: 主要记录了《OpenCV3 计算机视觉》相关读书笔记
+date:   2019-10-04 21:03:36
+categories: 
+---
+文|Seraph   
+本文主要记录了《OpenCV3 计算机视觉》相关读书笔记。
+
+### 01 | 安装OpenCV
+1. OpenCV(Open Source Computer Vision)
+2. NumPy库：提供数值计算函数，包括高效的矩阵计算函数。
+3. Scipy库：与NumPy密切相关的科学计算库。
+4. OpenNI库：支持深度摄像头。
+5. SensorKinect库：OpenNI的一个插件，支持微软的Kinect深度摄像头。
+6. 测试代码
+```python
+import cv2
+import numpy as np
+img = cv2.imread('300.jpg')
+cv2.namedWindow("300")
+cv2.imshow("300",img)
+cv2.waitKey(0)
+```
+
+### 02 | 处理文件、摄像头和图形用户界面
+```python
+img = numpy.zeros((3,3), dtype=numpy.uint8)
+img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+img.shape
+```
+
+```python
+import cv2
+image = cv2.imread(‘MyPic.png’)
+cv2.imwrite(‘MyPic.jpg’, image)
+```
+
+imread函数的参数：
+IMREAD_ANYCOLOR = 4
+IMREAD_ANYDEPTH = 2
+IMREAD_COLOR = 1
+IMREAD_GRAYSCALE = 0
+IMREAD_LOAD_GDAL = 8
+IMREAD_UNCHANGED = -1
+
+```python
+import cv2 
+grayImage = cv2.imread(‘MyPic.png’, cv2.IMREAD_GRAYSCALE)
+cv2.imwrite(‘MyPicGray.png’, grayImage)
+```
+Mac下的问题绝对路径，可以用`pwd`获取。
+
+imread会删除所有alpha通道的信息，返回BGR格式的图像。
+
+OpenCV图像是array类型，例如`image[0, 0, 0]`，第一个元素代表像素的y坐标或者行，0表示顶部；第二个值是像素的x坐标或列，0表示最左边；第三个值（如果可用的话）表示颜色通道。
+另外一种`image.item((0,0))`或`image.itemset((0, 0), 128)`
+bytearray格式为标准的字节数组格式，他与OpenCV的array可以相互转换：
+```python
+byteArray = bytearray(image)
+grayImage = numpy.array(grayByteArray).reshape(height, width)
+bgrImage = numpy.array(bgrByteArray).reshape(height, width, 3)
+```
+
+
+```python
+import cv2
+import numpy
+import os
+
+randomByteArray = bytearray(os.urandom(120000))
+flatNumpyArray = numpy.array(randomByteArray)
+
+grayImage = flatNumpyArray.reshape(300,400)//注意300*400=120000
+cv2.imwrite('RandomGray.png', grayImage)
+
+bgrImage = flatNumpyArray.reshape(100, 400, 3)//100*400*3=120000
+cv2.imwrite('RandomColor.png', bgrImage)
+```
+
+```python
+numpy.random.randint(0, 255, 120000).reshape(300, 400)
+```
+
+
+```python
+import cv2 
+import numpy as np
+img = cv2.imread(‘MyPic.png’)
+img[0,0] = [255, 255, 255]
+img.itemset( (0,0,0) , 255)
+```
+
+通过循环来处理Python数组的效率非常低效，应该尽量避免这样的操作。
+使用数组索引可以高效地操作像素：
+```python
+import cv2
+import numpy as np
+img = cv2.imread(‘MyPic.png’)
+img[:,:,1] = 0 #将图像所有的G通道设为0
+```
+
+区域像素操作
+ROI（Region Of Interest）
+```python
+import cv2
+import numpy as np
+img = cv2.imread(‘MyPic.png’)
+my_roi = img[0:100, 0:100]
+img[300:400, 300:400] = my_roi #区域大小必须匹配
+```
+
+numpy.array 属性：
+shape：返回包含宽度、高度和通道数
+size：图像像素的大小（空间大小）
+dtype: 图像的数据类型（如uint8）
+
+
+
+```python
+import cv2
+
+videoCapture = cv2.VideoCapture('/Users/seraph/Documents/Python-work/1.mov')
+fps = videoCapture.get(cv2.CAP_PROP_FPS)
+size = (int(videoCapture.get(cv2.CAP_PROP_FRAME_WIDTH)),
+        int(videoCapture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+videoWriter = cv2.VideoWriter('/Users/seraph/Documents/Python-work/2.avi',
+cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'),
+fps, size)
+
+success, frame = videoCapture.read()
+while success:
+    videoWriter.write(frame)
+    success, frame = videoCapture.read()
+```
+VideWriter_fourcc参数：
+‘I’, ‘4’, ‘2’, ‘0’: 未压缩的YUV颜色编码，4：2：0采样，这种编码有很好的兼容性，但是文件较大，文件扩展名为.avi；
+‘P’, ‘I’, ‘M’, ‘1’: MPEG-1编码类型，文件扩展名为.avi； 
+‘X’, ‘V’, ‘I’, ‘D’: MPEG-4编码类型，视频大小平均，文件扩展名为.avi，推荐使用； 
+’T’, ‘H’, ‘E’, ‘O’: Ogg Vorbis，文件扩展名为.ogv；
+‘F’, ‘L’, ‘V’, ‘I’: Flash视频，文件扩展名为.flv。  
+
+```python
+import cv2
+
+cameraCapture = cv2.VideoCapture(0)
+if cameraCapture.isOpened():# 需要判断是否成功打开摄像头
+    fps = 30
+    size = (int(cameraCapture.get(cv2.CAP_PROP_FRAME_WIDTH)),
+            int(cameraCapture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    videoWriter = cv2.VideoWriter('/Users/seraph/Documents/Python-work/3.avi',
+    cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), fps, size)
+
+    sucess, frame = cameraCapture.read()
+    numFramesRemaining = 10*fps -1
+    while sucess and numFramesRemaining >0:
+        videoWriter.write(frame)
+        sucess, frame = cameraCapture.read()
+        numFramesRemaining -= 1;
+    cameraCapture.release()
+```
+当终端不支持所查询的属性时，则会返回0。VideoCapture类的get()方法不能返回摄像头帧速率的准确值，它总是返回0，所以这里预设fps为30。
+
+多个摄像头
+```python
+success0 = cameraCapture0.grab()
+success1 = cameraCapture1.grab()
+if success0 and success1:
+  frame0 = cameraCapture0.retrieve()
+  frame1 = cameraCapture1.retrieve()
+```
+
+
+窗口显示图像
+```python
+import cv2 
+import numpy as np
+
+img = cv2.imread(‘MyPic.jpg’)
+cv2.namedWindow('my image’) #创建窗口
+cv2.imshow('my image', img) #显示窗口
+cv2.waitKey(0)
+cv2.destoryAllWindows() #释放由OpenCV创建的所有窗口
+```
+
+DestroyWindow()销毁窗口
+任意窗口下，可以使用waitKey()函数来获取键盘输入；
+setMouseCallback()函数来获取鼠标输入。
+
+
+在窗口显示摄像头帧
+```python
+import cv2
+
+clicked = False
+def onMouse(event, x, y, flags, param):
+    global clickedif 
+    if event == cv2.EVENT_LBUTTONUP:
+        clicked = True
+
+cameraCaptrue = cv2.VideoCapture(0)
+cv2.namedWindow("MyWindow")
+cv2.setMouseCallback("MyWindow", onMouse)
+
+print('Showing camera feed. Click window or press any key to stop.')
+success, frame = cameraCaptrue.read()
+while success and cv2.waitKey(1) == -1 and not clicked:
+    cv2.imshow('MyWindow', frame)
+    success, frame = cameraCaptrue.read()
+
+cv2.destroyWindow('MyWindow')
+cameraCaptrue.release()
+```
+waitKey(1)，返回值可能大于ASCII码值，所以我们可以读取最后一个字节来保证只提取ASCII码。
+```python
+keycode = cv2.waitKey(1)
+if kecode != -1:
+  keycode &= 0xFF
+```
+ord()函数可以将字符转换为ASCII码。
+
+OpenCV的窗口只有在调用waitKey()函数时才会更新，waitKey()函数只有在OpenCV窗口成为活动窗口时，才能捕获输入信息。
+OpenCV不提供任何处理窗口事件的方法，所以我们一般把OpenCV集成到其它应用程序框架中。
+
+鼠标事件：
+
+|事件号|含义|
+|---|---|
+|cv2.EVENT_MOUSEMOVE|鼠标移动|
+|cv2.EVENT_LBUTTONDOWN|鼠标左键按下|
+|cv2.EVENT_RBUTTONDOWN|鼠标右键按下|
+|cv2.EVENT_MBUTTONDOWN|鼠标中间按下|
+|cv2.EVENT_LBUTTONUP|鼠标左键松开|
+|cv2.EVENT_RBUTTONUP|鼠标右键键松开|
+|cv2.EVENT_MBUTTONUP|鼠标中键松开|
+|cv2.EVENT_LBUTTONDBLCLK|双击鼠标左键|
+|cv2.EVENT_RBUTTONDBLCLK|双击鼠标右键|
+|cv2.EVENT_MBUTTONDBLCLK|双击鼠标中键|
+
+鼠标可组合事件：
+|事件号|含义|
+|---|---|
+|cv2.EVENT_FLAG_LBUTTON|按下鼠标左键|
+|cv2.EVENT_FLAG_RBUTTON|按下鼠标右键|
+|cv2.EVENT_FLAG_MBUTTON|按下鼠标中键|
+|cv2.EVENT_FLAG_CTRLKEY|按下Ctrl键|
+|cv2.EVENT_FLAG_SHIFTKEY|按下Shift键|
+|cv2.EVENT_FLAG_ALTKEY|按下Alt键|
+
+Cameo框架：
+Managers.py文件
+```python
+import cv2
+import numpy
+import time 
+
+class CaptureManager(object):
+    def __init__(self, capture, previewWindowManager = None,
+    shouldMirrorPreview = False):
+        self.previewWindowManager = previewWindowManager
+        self.shouldMirrorPreview = shouldMirrorPreview
+
+        self._capture = capture 
+        self._channel = 0
+        self._enteredFrame = False
+        self._frame = None
+        self._imageFilename = None
+        self._videoFilename = None
+        self._videoEncoding = None
+        self._videoWriter = None
+
+        self._startTime = None
+        self._frameElapsed = int(0)
+        self._fpsEstimate = None
+
+    @property
+    def channel(self):
+        return self._channel
+
+    @channel.setter
+    def channel(self, value):
+        if self._channel != value:
+            self._channel = value
+            self._frame = None
+
+    @property
+    def frame(self):
+        if self._enteredFrame and self._frame is None:
+             _, self._frame = self._capture.retrieve()
+        return self._frame
+        
+    @property
+    def isWritingImage(self):
+        return self._imageFilename is not None
+    
+    @property
+    def isWritingVideo(self):
+        return self._videoFilename is not None
+
+    def enterFrame(self):
+        """Capture the next frame, if any."""
+        #But first, check that any previous frame was exited
+        assert not self._enteredFrame, \
+            'Previous enterFrame() had no matching exitFrame()'
+
+        if self._capture is not None:
+            self._enteredFrame = self._capture.grab()
+
+    def exitFrame(self):
+        """Draw to the window. Write to files. release the frame."""
+        #check whether any grabbed frame is retrievable
+        #The getter may retrieve and cache the frame.
+        if self.frame is None:
+            self._enteredFrame = False
+            return
+
+        # Update the FPS estimate and related variables
+        if self._frameElapsed == 0:
+            self._startTime = time.time()
+        else:
+            timeElapsed = time.time() - self._startTime
+            self._fpsEstimate = self._frameElapsed / timeElapsed
+        self._frameElapsed += 1
+
+        #Draw to the window, if any.
+        if self.previewWindowManager is not None:
+            if(self.shouldMirrorPreview):
+                mirroredFrame = numpy.fliplr(self._frame).copy()
+                self.previewWindowManager.show(mirroredFrame)
+            else:
+                self.previewWindowManager.show(self._frame)
+            
+        # Write to the image file, if any.
+        if self.isWritingImage:
+            cv2.imwrite(self._imageFilename, self._frame)
+            self._imageFilename = None
+            
+        # Write to the Video file, if any
+        self._writeVideoFrame()
+
+        # Release the frame
+        self._frame = None
+        self._enteredFrame = False
+
+    def writeImage(self, filename):
+        """Write the next exited frame to an image file."""
+        self._imageFilename = filename
+
+    def startWritingVideo(self, filename, encoding = cv2.VideoWriter_fourcc('I', '4', '2', '0')):
+        """Start writing exited frames to a video file."""
+        self._videoFilename = filename
+        self._videoEncoding = encoding
+        
+    def stopWritingVideo(self):
+        """Stop writing exited frames to a video file."""
+        self._videoFilename = None
+        self._videoEncoding = None
+        self._videoWriter = None
+
+    def _writeVideoFrame(self):
+        if not self.isWritingVideo:
+            return
+
+        if self._videoWriter is None:
+            fps = self._capture.get(cv2.CAP_PROP_FPS)
+            if fps == 0.0:
+                # The capture FPS is unkown so use an estimate.
+                return
+            if self._frameElapsed < 20:
+                #Wait until more frames elapse so that the estimate is more statle.
+                return
+            else:
+                fps = self._fpsEstimate
+                size = (int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
+                int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+                self._videoWriter = cv2.VideoWriter(self._videoFilename, self._videoEncoding, fps, size)
+        self._videoWriter.write(self._frame)    
+
+
+class WindowManager(object):
+    def __init__(self, windowName, keypressCallBack = None):
+        self.keypressCallBack = keypressCallBack
+        self._windowName = windowName
+        self._isWindowCreated = False
+
+    @property
+    def isWindowCreated(self):
+        return self._isWindowCreated
+    def createWindow(self):
+        cv2.namedWindow(self._windowName)
+        self._isWindowCreated = True
+
+    def show(self, frame):
+        cv2.imshow(self._windowName, frame)
+    
+    def destroyWindow(self):
+        cv2.destroyWindow(self._windowName)
+        self._isWindowCreated = False
+    
+    def processEvents(self):
+        keycode = cv2.waitKey(1)
+        if self.keypressCallBack is not None and keycode != -1:
+            # Discard any non-ASCII info encoded by GTX
+            keycode &= 0xFF
+            self.keypressCallBack(keycode)
+```
+cameo.py文件
+```python
+import cv2
+from Managers import WindowManager, CaptureManager
+
+class Cameo(object):
+    def __init__(self):
+        self._windowManager = WindowManager('Cameo', self.onKeyPress)
+        self._captureManager = CaptureManager(cv2.VideoCapture(0), self._windowManager, True)
+    
+    def run(self):
+        """Run the main loop."""
+        self._windowManager.createWindow()
+        while self._windowManager.isWindowCreated:
+            self._captureManager.enterFrame()
+            frame = self._captureManager.frame
+            #TODO: Filter the frame (Chapter 3).
+            self._captureManager.exitFrame()
+            self._windowManager.processEvents()
+
+    def onKeyPress(self, keycode):
+        """Handle a keycode/
+        space -> Take a screenshot.
+        tab   ->  Start/Stop recording a screencast.
+        escape  -> Quit"""
+        if keycode == 32: #space
+            self._captureManager.writeImage("screenshot.png")
+        elif keycode == 9: #tab
+            if not self._captureManager.isWritingVideo:
+                self._captureManager.startWritingVideo('screencast.avi')
+            else:
+                self._captureManager.stopWritingVideo()
+        elif keycode == 27:#escape
+            self._windowManager.destroyWindow()
+    
+if __name__ == "__main__":
+    Cameo().run()
+```
+
+### 03 | 使用OpenCV处理图像
+低通滤波：根据像素与周围像素的亮度差值来提升该像素的亮度的滤波器。
+```python
+import cv2
+import numpy as np
+from scipy import ndimage
+kernel_3X3 = np.array([[-1, -1, -1],
+                       [-1, 8, -1],
+                       [-1, -1, -1]])
+kernel_5X5 = np.array([[-1, -1, -1, -1, -1],
+                       [-1, 1, 2, 1, -1],
+                       [-1, 2, 4, 2, -1],
+                       [-1, 1, 2, 1, -1],
+                       [-1, -1, -1, -1, -1]])
+img = cv2.imread("F:\\Images\\2.bmp", 0)
+k3 = ndimage.convolve(img, kernel_3X3)
+k5 = ndimage.convolve(img, kernel_5X5)
+blurred = cv2.GaussianBlur(img, (11,11), 0)
+g_hpf = img - blurred
+cv2.imshow("3x3", k3)
+cv2.imshow("5x5", k5)
+cv2.imshow("g_hpf", g_hpf)
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+![高通滤波结果图](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWMxY2JkM2JjMDY4OGE1ZGIucG5n?x-oss-process=image/format,png)
+
+
+```python
+import cv2
+import numpy as np
+
+img = cv2.imread("F:/Images/2.bmp")
+cv2.imwrite("canny.jpg", cv2.Canny(img, 200, 300))
+cv2.imshow("canny", cv2.imread("canny.jpg"))
+cv2.waitKey()
+cv2.destroyAllWindows()
+```
+![Canny](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTNmMmU1ZTI2ZmE5YzI2ZWIucG5n?x-oss-process=image/format,png)
