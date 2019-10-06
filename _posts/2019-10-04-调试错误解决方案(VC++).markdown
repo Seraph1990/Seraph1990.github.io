@@ -1,4 +1,10 @@
-
+---
+layout: post
+title:  "调试错误解决方案(VC++)"
+description: 主要用来记录使用Visual Studio过程中，出现的各种error，并提供自己当时解决的方案。
+date:   2019-10-04 09:03:36
+categories: vc++ error
+---
 文|Seraph
 >这篇文章主要用来记录使用Visual Studio过程中，出现的各种error，并提供自己当时解决的方案。
 但是，一个error可能由不用原因引起的，文中案例仅供大家参考。
