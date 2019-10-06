@@ -1,0 +1,58 @@
+---
+layout: post
+title:  "VS2017与OpenCV 4.0.0环境搭建"
+description: 主要介绍了基于VS2017之上的OpenCV 4.0.0的环境配置
+date:   2019-10-04 21:03:36
+categories: 
+---
+
+文|Seraph   
+本文主要介绍了基于VS2017之上的OpenCV 4.0.0的环境配置
+# 01 | 准备
+1. 在Win10上安装VS2017。
+2. 下载[OpenCV](https://opencv.org/) 4.0.0的安装包。
+# 02 | 安装
+1. 将``opencv-4.0.0-vc14_vc15.exe``解压到指定的目录下，这里以``E:\SDK\OpenCV4.0.0``目录为例。
+2. 添加系统环境变量路径Path如下：``E:\SDK\OpenCV4.0.0\opencv\build\x64\vc15\bin``
+# 03 | 配置VS2017
+以下配置以``Debug|x64``为例，如需生成其他版本执行程序，配置相应的属性卡即可。
+1. 新键一个控制台工程，并添加一个.cpp文件，用来后续输入测试代码。
+2. 依次点击菜单`视图-其他窗口-属性管理器`，如下：  
+![属性管理器](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTI1YjNlODAxMzEwMDg4MDkucG5n?x-oss-process=image/format,png)
+3. 双击`Debug | x64`下的``Microsoft.Cpp.x64.user``  
+![属性页](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTFkNTRjOGQ1MDE2Yjg4YjcucG5n?x-oss-process=image/format,png)
+4. 分别在包含目录、库目录添加如下路径值： 
+包含目录：
+``E:\SDK\OpenCV4.0.0\opencv\build\include``
+``E:\SDK\OpenCV4.0.0\opencv\build\include\opencv2``
+库目录：
+``E:\SDK\OpenCV4.0.0\opencv\build\x64\vc15\lib``
+5. 并在链接器的`输入`选项卡的``附加依赖项``添加``opencv_world400d.lib``。（如果是`Release`，添加`opencv_world400.lib`即可）
+# 04 | 编译测试
+1. 修改编译选项如下：  
+![编译选项](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTI2YzY0OTBiMTMyZDA2NmUucG5n?x-oss-process=image/format,png)
+2. 输入以下代码  
+```cpp
+#include <iostream>
+#include <opencv2/opencv.hpp>
+using namespace cv;
+int main()
+{
+	Mat img = imread("E:\\Picture\\Samples\\2.bmp");
+        //这里的文件路径为你本地图片的绝对路径，注意是“\\”而不是“\”
+	imshow("Viewer", img);
+	waitKey(0);
+	return 0;
+}
+```
+3. 编译并调试即可打开本地图片，如下：   
+![图片加载](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWYxNmE1MzRkYjgyODRlMjkucG5n?x-oss-process=image/format,png)
+
+# 05 | 问题处理
+1. 编译出现错误：``已退出,返回代码为: -1073741515。 若要在调试停止时自动关闭控制台,请启用“工具...``
+解决：检查如上安装的第2步的Path路径是否已经添加上，如已经添加上。可能是在新建VS工程后再修改的。需要重启一下VS，重新打开工程即可。
+原因：我们生成的执行程序运行需要依赖于Opencv的动态库才能运行，如没添加成功系统环境变量的路径，执行程序不能找到需要加载的Opencv动态库，导致运行失败。
+2. 当编译的时候报未找到``opencv2/opencv.hpp``
+解决：请确认生成编译选项是否选对了`Debug|x64`。
+
+
