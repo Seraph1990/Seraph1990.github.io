@@ -1,0 +1,286 @@
+---
+layout: post
+title:  "Windows开发类软件安装和使用"
+description: 主要介绍了一些Windows系统平台下常用的开发了小工具软件
+date:   2019-10-06 10:09:36
+categories: Scoop Vim Visual AssistX
+---
+文|Seraph   
+本文主要介绍了一些Windows系统平台下常用的开发了小工具软件。
+
+### 00 | 软件列表
+1. scoop
+2. Sublime Text
+3. Vim
+4. Emacs
+5. Msys2
+6. CMake
+7. Visual AssistX
+
+### 01 | [scoop](https://scoop.sh/) 包管理工具
+1. 安装：PowerShell中输入
+```set-executionpolicy remotesigned -s cu```
+再输入
+```iex (new-object net.webclient).downloadstring('https://get.scoop.sh')```
+即会自动下载并安装。
+2. 使用：
+安装完毕后，可使用``scoop --help``查询使用scoop命令的方式如下：
+![scoop命令](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LTVlMDM3MjA3MTg0ZjRlZWEucG5n?x-oss-process=image/format,png)
+
+常用命令：
+（1）``scoop install``安装app
+![scoop install 7zip](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWM4OGI5YWQ2NTJhYTVjZDMucG5n?x-oss-process=image/format,png)
+当你安装一些软件如见可能出现如下问题：
+![scoop install jdk](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWNmZmVjNmM4NGI4ZDM0ZGQucG5n?x-oss-process=image/format,png)
+提示告诉我们没有找到``jdk``，需要添加``bucket``，我们一般安装的app都在``main bucket``，同时也提供其他``bucket``，如``extras bucket``、``java bucket``。当然，Scoop还提供自定义自己的``bucket``，具体详见官网。
+执行如下命令：```scoop bucket add java```
+然后在执行命令：```scoop install java/oraclejdk```即能安装成功
+（2）``scoop list`` 查看已经安装的app列表
+（3）``scoop uninstall``卸载app
+（4）``scoop search``搜索``bucket``是否有该app
+（5）``scoop status``查看app的依赖项 
+
+
+
+
+### 02 | [Sublime Text](http://www.sublimetext.com/) 文本编辑器
+
+按下Ctrl+Shift+P调出命令面板输入install 调出 Install Package 选项并回车，然后在列表中选中要安装的插件。
+
+### 03 |  [Vim](https://www.vim.org/)文本编辑器
+1. 安装：下载Windows版本安装即可。
+找到相应的安装目录，我装完后安装目录为：``C:\Program Files (x86)\Vim\vim81``,将其加入到系统环境变量里，即可在Powershell中直接使用vim命令了。
+
+2.使用
+Vim文本编辑分为三种模式：插入模式、普通模式、命令模式
+* 普通模式下，将按``i``或``a``即可进入插入模式，从而可以输入文字；
+* 普通模式下，输入``:``即可进入命令模式，可输入相应命令对文件进行保存等操作；
+* 插入模式和命令模式下，都可以按``Esc``返回到普通模式。
+
+**普通模式下相关命令：**
+
+|命令|作用|
+|----|-----|
+|i| 在光标前插入 I 在行首插入|
+|a| 在光标后插入 A 在行末插入|
+|o| 在下一行插入 O 在上一行插入|
+|x |删除当前字符 X 删除前一个字符|
+|3h |左3|
+|3j |下3|
+|3k|上3|
+|3l| 右3|
+|dd |删除一行| 
+|3dd| 从当前行开始删除3行|
+|dG|从当前位置一直删除到文件末尾，因为G的作用是跳到文件最后一行。|
+|yy| 拷贝一行|
+|3yy |从当前行开始拷贝3行|
+|1,3d |删除1至3行|
+|1,3y| 拷贝1至3行 （.代表当前行，$代表最后一行）|
+|v%|选定匹配区域|
+|gg|到文件第一行|
+|D|删除到行尾|
+|3i=再按ESC|连续插入3个=|
+
+注：``3|`` 定位到第3列表
+
+
+**命令模式下相关命令：**
+|命令|作用|
+|------|-----|
+|q!|强行不保存退出|
+|:x |退出，如果文件更改则保存|
+|wq|保存退出|
+|w|保存文件|
+|e|打开文件|
+|sy on/clear|表示语法加亮打开/消除|
+|set go=|消除配置|
+|colo 颜色|设置背景颜色，colo （加一个空格）就连续tab，选择不同的配色|
+|:tabnew|新建标签页打开文件|
+|help|查询命令|
+助记忆的理解：
+`w`可以理解为要将文件`Write`到本地磁盘  
+`e`可理解为要`Edit`指定文件
+`q`自然不用说是`Quit`
+`go`是`gui option`的缩写
+
+ 
+
+常见问题：
+(1) 
+
+### 04 | [Emacs](https://www.gnu.org/software/emacs/) 文本编辑器
+1. Msys2环境下安装命令
+``pacman -S mingw-w64-x86_64-emacs``
+###05 | [Msys2](https://sourceforge.net/projects/msys2/) Linux模拟环境
+1. 安装很简单，就是打开安装包，点下一步。。。
+2. 使用
+
+###06 | [CMake](https://cmake.org/download/)
+
+###07 | [Visual AssistX](https://www.wholetomato.com/)
+这个VS插件正版是要钱的，下个破解就行。
+1. 编辑 Snippet
+打开路径：VAssistX--Insert VA Snippet--Exit VA Snippet
+![Exit VA Snippet](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWZlY2NkNTZmYWM5ZWViOTMucG5n?x-oss-process=image/format,png)
+其实VAX的提示都是通过Snippet来实现的，功能菜单也是，只不过还提供自定义Snippet功能
+命令常用字段含义：（我们自己定义Snippet时会用到）
+
+|字段|含义|
+|---|---|
+|``$DATE$``| 年/月/日|
+|``$DAY$``|日 |
+|``$DAYNAME$``|星期简写|
+|``$DAYLONGNAME$``|星期全称|
+|``$MONTH$``|月|
+|``$MONTHNAME$``|月份简写|  
+|``$MONTHLONGNAME$``|月份全称|
+|``$YEAR$``|年|
+|``$YEAR_02$``|只显示后两位年份|
+|``HOUR$``|小时|
+|``$MINUTE$``|分|
+|``$SECOND$``|秒|
+|``$FILE$``| 文件绝对路径|
+|``$FILE_UPPER$``|大写的文件绝对路径| 
+|``$FILE_PATH$``|文件绝对路径|
+|``$FILE_PATH_UPPER$``|大写的文件绝对路径|
+|``$FILE_BASE$``|文件名|
+|``$FILE_BASE_UPPER$``|大写的文件名|
+|``$FILE_EXT$``|文件后缀|
+|``$FILE_EXT_UPPER$``|大写的文件后缀|
+|``$clipboard$``| 当前剪切板内容|
+|``$end$``| 输入完成后光标位置|
+|``$$``|转义$|
+|``$MethodName$``|方法名|
+|``$MethodArgs$``|方法参数列表|
+|``$ClassName$``|类名|
+|``$BaseClassName$``|基类名|
+|``$NamespaceName$``|命名空间名|
+|``$GUID_DEFINITION$``| 以‘,’间隔的GUID|
+|``$GUID_STRING$``|  以‘-’间隔的GUID|
+|``$GUID_STRUCT$``|GUID结构|
+
+
+本人常用Snippet
+<1>
+Title: C mode
+Shortcut: #c
+Description: C语言代码模板
+```
+#include <stdio.h>
+int main(int argc, char* argv[])
+{
+	$selected$
+
+	return 0;
+}
+```
+<2>
+Title: file_comment_lsp
+Shortcut: #cmf
+Description: 文件注释
+```
+/***************************************************************************** 
+    *  @COPYRIGHT NOTICE 
+    *  @Copyright (c) 2018, CTEC
+    *  @All rights reserved 
+ 
+    *  @file     : $FILE_BASE$.$FILE_EXT$ 
+    *  @version  : ver 1.0 
+ 
+    *  @author   : Liushupeng 
+    *  @date     : $YEAR$/$MONTH$/$DAY$ $HOUR$:$MINUTE$ 
+    *  @brief    : $brief$ 
+*****************************************************************************/ 
+```
+
+<3>
+Title: budd
+Shortcut: #budd
+Description: 佛祖保佑
+```
+//
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .' \\|     |// '.
+//                 / \\|||  :  |||// \
+//                / _||||| -:- |||||- \
+//               |   | \\\  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//             ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//
+//
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//               佛祖保佑         永无BUG
+//					      Seraph
+```
+<4>单行注释
+Title: Single Comment
+Shortcut: #sc
+Description: 单行注释
+```
+//$comment$ [liushupeng $YEAR$/$MONTH_02$/$DAY_02$]
+```
+<5>多行注释
+Title: Mul Comment
+Shortcut: #mc
+Description: 多行注释
+```
+/*-----------------$comment$ start liushupeng $YEAR$/$MONTH_02$/$DAY_02$-----------------*/
+/*-----------------$comment$ end liushupeng $YEAR$/$MONTH_02$/$DAY_02$-------------------*/
+```
+
+2. Snippet导出导入
+VAX没有提供界面导出导入功能，但手动拷贝文件.tpl即可
+文件路径：C:\Users\用户\AppData\Roaming\VisualAssist\Autotext
+
+3. 菜单功能描述
+
+|菜单|简述|
+|---|---|
+|Add Member|加成员|
+|add include|添加头文件|
+|create implementation|添加实现|
+|create declaration|添加声明|
+|document method|方法说明|
+|move implementation to source file|移动实现到头文件|
+|rename|重命名|
+|encapsulate field|变量封装|
+|changs signature|改变签名|
+
+4. 快捷键
+
+|快捷键|命令解析|
+|------|--------|
+|Alt + O| 在.h与.cpp之间互跳|
+|Alt + G| 在定义与声明之间互跳|
+|Alt+M|打开文件中的方法|
+|Alt + Shift + Q|鼠标放置函数上，弹出菜单，分别有（创建函数定义或声明、改变函数名、改变函数签名、创建函数注释）功能|
+|Alt + Shift + R|函数、类重命名|
+|Alt + Shift + S|搜索字符|
+|Alt + Shift + O|搜索文件|
+|Alt + Shift + F|找出字符串所用引用的地方|
+|Ctrl+ Shift + V|选择剪切板的内容进行粘贴|
+|Alt + 左方向键|回到上次访问代码停留处|
+|Alt + 上/下方向键|上/下一个Outline|
+
+
+5. 去除拼写错误识别（一般中文会显示为错误）
+``Visual Assist X Options --Advanced--Underlines``
+去掉``Underline spelling errors in comments and strings``勾选 
+
+
+
+
+更多内容详见[官方手册](https://www.wholetomato.com/learn/getStarted.asp)
+
