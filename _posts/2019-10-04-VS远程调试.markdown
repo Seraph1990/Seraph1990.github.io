@@ -1,4 +1,10 @@
-
+---
+layout: post
+title:  "VS远程调试"
+description: 主要介绍Visual studio的远程调试功能使用步骤（以VS2010进行介绍）
+date:   2019-10-04 21:03:36
+categories: Visual studio, Windows
+---
 文|Seraph
 本文主要介绍Visual studio的远程调试功能使用步骤（以VS2010进行介绍）
 
