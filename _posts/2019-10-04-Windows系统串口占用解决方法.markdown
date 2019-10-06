@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Windows系统串口占用解决方法"
+description: Windows系统串口占用解决方法）
+date:   2019-10-04 09:32:36
+categories: Visual 串口
+---
 文|Seraph
 >本文主要介绍消除串口被占用（使用中）的问题。
 
@@ -7,7 +14,7 @@
 
 
 ##### 1. 检查串口被占用情况
-* 打开``设备管理器``，点开``端口（COM和LPT）``
+* 打开`设备管理器`，点开``端口（COM和LPT）``
 * 找到``COM1``（假设为当前程序需要使用的串口号），然后右键选择``属性``，打开``端口设置``选项卡如下图所示：   
 ![COM1属性](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzQ1NTc2NjUtZDExYTJmNzkwNTMyMTg2ZS5wbmc?x-oss-process=image/format,png)
 * 单击``高级``按钮，打开``COM端口号``下拉选项，可以看到当前被占用的串口（注意：不能看到当前自己的占用情况）：   
