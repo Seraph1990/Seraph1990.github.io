@@ -20,6 +20,7 @@ categories: GitHub Jekyll
 2. 打开terminal，使用git clone克隆刚刚创建好的库。
 ![git clone](https://img-blog.csdnimg.cn/20191004205015246.png)
 3. 在本地库`MESeraph.github.io`目录下新建一个`index.html`，内容如下：(这是一个简单的html网页）
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
