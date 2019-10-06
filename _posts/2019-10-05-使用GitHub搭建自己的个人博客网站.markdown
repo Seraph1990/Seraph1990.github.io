@@ -1,4 +1,12 @@
-文|Seraph
+---
+layout: post
+title:  "使用GitHub搭建自己的个人博客网站"
+description: 本文主要介绍使用GitHub、Jekyll搭建个人博客网站过程
+date:   2019-10-05 21:03:36
+categories: GitHub Jekyll
+---
+文|Seraph   
+本文主要介绍使用GitHub、Jekyll搭建个人博客网站过程。
 
 ### 00 | 前期准备
 1. 注册好GitHub账号，并在本机部署好Git环境。如不熟悉Git/GitHub的使用，可以看下这篇[《GitHub入门与实践》读书笔记](https://blog.csdn.net/pengshuyes/article/details/101849054)或原书。
@@ -36,7 +44,8 @@
 5. 将修改更新至GitHub。
 首次连接GitHub，需要如下一样输出账户和密码。
 ![git push](https://img-blog.csdnimg.cn/2019100420550771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
-6. 打开GitHub中刚新建的MESeraph.github.io库，然后点击`setting`，下拉找到如下页面： ![GitHub Pages](https://img-blog.csdnimg.cn/20191004205933891.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+6. 打开GitHub中刚新建的MESeraph.github.io库，然后点击`setting`，下拉找到如下页面： 
+![GitHub Pages](https://img-blog.csdnimg.cn/20191004205933891.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
 7. 打开上图的链接`https://meseraph.github.io`，即能打开我们刚新建的网页。即证明GitHub网页设置成功。
 ![首页](https://img-blog.csdnimg.cn/20191004210254296.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
 
