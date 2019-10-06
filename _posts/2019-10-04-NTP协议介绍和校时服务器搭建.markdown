@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "NTP协议介绍和校时服务器搭建"
+description: 主要简单介绍用于校时的NTP/SNTP协议
+date:   2019-10-04 21:03:36 +0530
+categories: NTP Windows
+---
 文|Seraph
 >本文主要简单介绍用于校时的NTP/SNTP协议
 >同时，以windows 2008 R2为例，搭建NTP/SNTP服务器
