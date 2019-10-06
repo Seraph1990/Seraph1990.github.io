@@ -16,10 +16,10 @@ sass:
 permalink: /posts/:title/
 texture:
   title: LiuShupeng Blog
-  tagline: 喜欢就争取，得到就珍惜，失去就忘记。
+  tagline: 喜欢就争取，得到就珍惜，失去就忘记
   date_format: "%b %-d, %Y"
   style: black
-  showNav: true
+  showNav: false
   showPicker: false
 
   # generate social links in footer
