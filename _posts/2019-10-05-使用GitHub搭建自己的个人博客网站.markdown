@@ -52,9 +52,11 @@ categories: GitHub Jekyll
 
 ### 02 | 域名解析
 1. 在MEseraph.github.io下添加一个CNAME文件，文件内容填写已经购买的域名，如下：
+
 ```
 www.liushupeng.cn
 ```
+
 2. 打开阿里云中域名解析页面，修改域名解析记录如下：![域名解析](https://img-blog.csdnimg.cn/20191004212647785.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
 3.  过一会就能使用该域名访问我们得GitHub Pages了。
 
