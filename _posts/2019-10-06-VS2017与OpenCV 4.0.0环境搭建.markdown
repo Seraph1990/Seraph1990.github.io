@@ -7,7 +7,8 @@ categories:
 ---
 
 文|Seraph   
-本文主要介绍了基于VS2017之上的OpenCV 4.0.0的环境配置
+本文主要介绍了基于VS2017之上的OpenCV 4.0.0的环境配置。   
+
 # 01 | 准备
 1. 在Win10上安装VS2017。
 2. 下载[OpenCV](https://opencv.org/) 4.0.0的安装包。
