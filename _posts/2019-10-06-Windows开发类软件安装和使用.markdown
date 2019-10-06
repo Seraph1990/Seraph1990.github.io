@@ -111,16 +111,16 @@ Vim文本编辑分为三种模式：插入模式、普通模式、命令模式
 ### 04 | [Emacs](https://www.gnu.org/software/emacs/) 文本编辑器
 1. Msys2环境下安装命令
 ``pacman -S mingw-w64-x86_64-emacs``
-###05 | [Msys2](https://sourceforge.net/projects/msys2/) Linux模拟环境
+### 05 | [Msys2](https://sourceforge.net/projects/msys2/) Linux模拟环境
 1. 安装很简单，就是打开安装包，点下一步。。。
 2. 使用
 
-###06 | [CMake](https://cmake.org/download/)
+### 06 | [CMake](https://cmake.org/download/)
 
-###07 | [Visual AssistX](https://www.wholetomato.com/)
+### 07 | [Visual AssistX](https://www.wholetomato.com/)
 这个VS插件正版是要钱的，下个破解就行。
 1. 编辑 Snippet
-打开路径：VAssistX--Insert VA Snippet--Exit VA Snippet
+打开路径：VAssistX--Insert VA Snippet--Exit VA Snippet   
 ![Exit VA Snippet](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy80NTU3NjY1LWZlY2NkNTZmYWM5ZWViOTMucG5n?x-oss-process=image/format,png)
 其实VAX的提示都是通过Snippet来实现的，功能菜单也是，只不过还提供自定义Snippet功能
 命令常用字段含义：（我们自己定义Snippet时会用到）
@@ -164,8 +164,8 @@ Vim文本编辑分为三种模式：插入模式、普通模式、命令模式
 <1>
 Title: C mode
 Shortcut: #c
-Description: C语言代码模板
-```
+Description: C语言代码模板   
+```cpp
 #include <stdio.h>
 int main(int argc, char* argv[])
 {
@@ -177,8 +177,8 @@ int main(int argc, char* argv[])
 <2>
 Title: file_comment_lsp
 Shortcut: #cmf
-Description: 文件注释
-```
+Description: 文件注释   
+```cpp
 /***************************************************************************** 
     *  @COPYRIGHT NOTICE 
     *  @Copyright (c) 2018, CTEC
@@ -227,15 +227,15 @@ Description: 佛祖保佑
 <4>单行注释
 Title: Single Comment
 Shortcut: #sc
-Description: 单行注释
-```
+Description: 单行注释   
+```cpp 
 //$comment$ [liushupeng $YEAR$/$MONTH_02$/$DAY_02$]
 ```
 <5>多行注释
 Title: Mul Comment
 Shortcut: #mc
-Description: 多行注释
-```
+Description: 多行注释   
+```cpp
 /*-----------------$comment$ start liushupeng $YEAR$/$MONTH_02$/$DAY_02$-----------------*/
 /*-----------------$comment$ end liushupeng $YEAR$/$MONTH_02$/$DAY_02$-------------------*/
 ```
