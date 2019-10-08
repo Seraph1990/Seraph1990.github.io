@@ -1,0 +1,30 @@
+文|Seraph
+1. 下载最新发布版[redis](https://redis.io/)，目前最新版为5.0.5。
+2. 使用terminal将`redis-5.0.5.tar.gz`文件拷贝至`/usr/local`，输入以下命令：
+```cmd
+tar xzf redis-5.0.5.tar.gz
+ln -s redis-5.0.5 redis
+cd redis
+make
+make install
+```
+我之前装了3.2.12，如现在安装新版本，依然按上面操作就行，安装会自动覆盖。
+
+4. 测试
+* `redis-cli -v ` 查询版本号   
+![redis-cli](https://img-blog.csdnimg.cn/20191008182039492.png)
+* `redis-server`启动服务端（默认6379端口启动）   
+![redis-server](https://img-blog.csdnimg.cn/2019100818224886.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+可以加指定端口配置运行启动`redis-server --port 6380`   
+![--port](https://img-blog.csdnimg.cn/20191008182915646.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+之前启动配置是临时的，亦可通过修改`/usr/local/redis/redis.conf`配置文件来启动，这样文件内容可以一次性对所有配置项进行修改，然后以该文件启动服务。   
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019100818462267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+我这里将配置文件中的port改为了6381。
+
+* `redis-cli -h {host} -p {port}`客户端连接   
+如上所见，一台机器可以启动多个服务端，所以我们这里必需指明连接哪个服务端（主机IP、端口号），如未填写，则默认连接`127.0.0.1`和`6379`   
+![客户端连接](https://img-blog.csdnimg.cn/20191008185313564.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+* `redis-cli shutdown`停止服务   
+![redis-cli shutdown](https://img-blog.csdnimg.cn/20191008185814346.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3BlbmdzaHV5ZXM=,size_16,color_FFFFFF,t_70)
+这里的停止服务，指的是通过客户端停止相应的服务器，如上可以看见`6379`端口的服务器自动退出了。
+关闭服务时，可以提供参数，告诉服务端是否生成持久化文件，命令如：`redis-cli shudown nosave|save`。
