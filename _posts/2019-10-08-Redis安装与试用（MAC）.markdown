@@ -5,7 +5,7 @@ description: 主要介绍了在mac上如何安装Redis
 date:   2019-10-08 19:09:36
 categories: redis
 ---
-文|Seraph
+文|Seraph   
 文本主要介绍了在mac上如何安装Redis。
 
 1. 下载最新发布版[redis](https://redis.io/)，目前最新版为5.0.5。
